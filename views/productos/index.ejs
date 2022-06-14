@@ -1,6 +1,10 @@
 <h1>Listado de Productos</h1>
 
 <% productos.forEach(producto => { %>
-    <h2><a href="/productos/<%= producto.id %>">Producto: <%= producto.id %></a></h2>
-    <p><%= producto.name %></p>
+    <h2><a href="/productos/<%= producto.id %>">id: <%= producto.id %></a></h2>
+    <p>nombre: <%= producto.nombre %></p>
 <% }) %>
+
+<a href="/productos/create">Crear Producto</a>
+
+<br><br>
