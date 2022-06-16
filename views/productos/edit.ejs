@@ -1,18 +1,19 @@
-<h1>Crear producto</h1>
+<h1>Editar producto</h1>
 
 <div class="row justify-content-center">
     <div class="col-6">
-        <form action="/productos/store" method="post">
+        <form action="/productos/update?_method=PUT" method="post">
+            <input type="hidden" name="id" value="<%= producto.id %>">
             <div>
                 <label for="nombre" class="form-label">Nombre: </label>
-                <input type="text" class="form-control" id="nombre" name="nombre">
+                <input type="text" class="form-control" id="nombre" name="nombre" value="<%= producto.nombre %>">
             </div>
             <div>
                 <label for="categoria" class="form-label">Categoria: </label>
                 <select class="form-control" name="categoria" id="categoria">
                     <option value=""></option>
-                    <option value="1">Categoria 1</option>
-                    <option value="2">Categoria 2</option>
+                    <option value="1" <%= producto.categoria_id == 1 ? 'selected' : '' %>>Categoria 1</option>
+                    <option value="2" <%= producto.categoria_id == 2 ? 'selected' : '' %>>Categoria 2</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary mt-3">Guardar</button>
