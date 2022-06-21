@@ -17,6 +17,8 @@ app.use(require('./routes/index'));
 app.use(require('./routes/productos'));
 app.use(require('./routes/contacto'));
 
+app.use('/admin', require('./routes/admin/productos'));
+
 app.use((req, res, next) => {
     res.status(404).send('Not Found');
 });
