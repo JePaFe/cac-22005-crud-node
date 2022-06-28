@@ -7,6 +7,7 @@
         <tr>
             <th>#</th>
             <th>Nombre</th>
+            <th>Imagen</th>
             <th></th>
         </tr>
     </thead>
@@ -15,6 +16,7 @@
         <tr>
             <td><%= producto.id %></td>
             <td><%= producto.nombre %></td>
+            <td><img width="100" src="/uploads/producto_<%= producto.id %>.jpg" alt="<%= producto.nombre %>"></td>
             <td>
                 <a href="/admin/productos/<%= producto.id %>" class="btn btn-primary">Ver</a>
                 <a href="/admin/productos/<%= producto.id %>/edit" class="btn btn-warning">Editar</a>

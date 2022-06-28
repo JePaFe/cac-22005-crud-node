@@ -1,4 +1,6 @@
 const connection = require('../../db');
+const sharp = require('sharp');
+const fs = require('fs');
 
 module.exports.index = (req, res) => {
     connection.query('SELECT * FROM productos', (error, results) => {
@@ -13,11 +15,15 @@ module.exports.create = (req, res) => {
 }
 
 module.exports.store = (req, res) => {
+    // console.log(req.body, req.file);
+    // sharp(req.file.buffer).resize(300).toFile('uploads/output.jpg');
     connection.query('INSERT INTO productos SET ?', 
         { nombre: req.body.nombre, categoria_id: req.body.categoria }, 
         (error, results) => {
             
         if (error) { throw error }
+
+        sharp(req.file.buffer).resize(300).toFile(`./public/uploads/producto_${results.insertId}.jpg`);
 
         // console.log(results);
         res.redirect('/admin/productos');
@@ -46,7 +52,17 @@ module.exports.update = (req, res) => {
     connection.query('UPDATE productos SET ? WHERE id = ?', [ { nombre: req.body.nombre, categoria_id: req.body.categoria }, req.body.id ] , (error) => {
         if (error) { throw error }
 
-        res.redirect('/admin/productos')
+        if (req.file) {
+            fs.unlink(`./public/uploads/producto_${req.body.id}.jpg`, async error => {
+                if (error) { console.log(error) }
+
+                await sharp(req.file.buffer).resize(300).toFile(`./public/uploads/producto_${req.body.id}.jpg`);
+
+                res.redirect('/admin/productos');
+            });
+        } else {
+            res.redirect('/admin/productos');
+        }
     });
 }
 

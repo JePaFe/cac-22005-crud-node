@@ -2,10 +2,14 @@
 
 <div class="row justify-content-center">
     <div class="col-6">
-        <form action="/admin/productos/store" method="post">
+        <form action="/admin/productos/store" method="post" enctype="multipart/form-data">
             <div>
                 <label for="nombre" class="form-label">Nombre: </label>
                 <input type="text" class="form-control" id="nombre" name="nombre">
+            </div>
+            <div>
+                <label for="imagen" class="form-label">Imagen: </label>
+                <input type="file" class="form-control" id="imagen" name="imagen">
             </div>
             <div>
                 <label for="categoria" class="form-label">Categoria: </label>
