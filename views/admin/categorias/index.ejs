@@ -1,0 +1,42 @@
+<h1 class="mb-3">Listado de Categorias</h1>
+
+<a href="/admin/categorias/create" class="btn btn-success">Crear Categoria</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% categorias.forEach(categoria => { %> 
+        <tr>
+            <td><%= categoria.id %></td>
+            <td><%= categoria.nombre %></td>
+            <td>
+                <a href="/admin/categorias/<%= categoria.id %>" class="btn btn-primary">Ver</a>
+                <a href="/admin/categorias/<%= categoria.id %>/edit" class="btn btn-warning">Editar</a>
+
+                <form class="form-delete" action="/admin/categorias/<%= categoria.id %>/delete?_method=DELETE" method="post" style="display: inline-block;">
+                    <button type="submit" class="btn btn-danger">Borrar</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('submit', event => {
+        if (event.target.classList.contains('form-delete')) {
+            event.preventDefault();
+
+            if (confirm('¿Esta seguro?')) {
+                event.target.submit();
+            }
+        }
+    });
+</script>
+

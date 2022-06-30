@@ -1,0 +1,14 @@
+<h1>Editar categoria</h1>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form action="/admin/categorias/update?_method=PUT" method="post">
+            <input type="hidden" name="id" value="<%= categoria.id %>">
+            <div>
+                <label for="nombre" class="form-label">Nombre: </label>
+                <input type="text" class="form-control" id="nombre" name="nombre" value="<%= categoria.nombre %>">
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+        </form>
+    </div>
+</div>
