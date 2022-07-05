@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const methodOverrride = require('method-override');
+const cors = require('cors');
 
 const sequelize = require('./db2');
 
@@ -13,6 +14,9 @@ app.use(expressLayouts);
 app.use(express.static(__dirname + '/public'));
 
 app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+app.use(cors());
+
 app.use(methodOverrride('_method'));
 const session = require('express-session');
 
@@ -36,6 +40,8 @@ app.use(require('./routes/contacto'));
 
 app.use('/admin', require('./routes/admin/productos'));
 app.use('/admin', require('./routes/admin/categorias'));
+
+app.use('/api', require('./routes/api/categorias'));
 
 app.use(require('./routes/auth'));
 
