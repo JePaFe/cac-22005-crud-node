@@ -5,6 +5,7 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const methodOverrride = require('method-override');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const sequelize = require('./db2');
 
@@ -34,14 +35,33 @@ const isLogin = (req, res, next) => {
     next();
 }
 
+const isJWTLogin = (req, res, next) => {
+    let token = req.headers['authorization'];
+
+    if (!token) {
+        return res.sendStatus(401);
+    } else {
+        token = token.replace('Bearer ', '');
+        jwt.verify(token, process.env.JWT_KEY, (error, decoded) => {
+            if (error) {
+                return res.sendStatus(401);
+            } else {
+                console.log(decoded);
+                next();
+            }
+        })
+    }
+}
+
 app.use(require('./routes/index'));
 app.use(require('./routes/productos'));
 app.use(require('./routes/contacto'));
 
-app.use('/admin', require('./routes/admin/productos'));
-app.use('/admin', require('./routes/admin/categorias'));
+app.use('/admin', isLogin, require('./routes/admin/productos'));
+app.use('/admin', isLogin, require('./routes/admin/categorias'));
 
-app.use('/api', require('./routes/api/categorias'));
+app.use('/api', require('./routes/api/auth'));
+app.use('/api', isJWTLogin, require('./routes/api/categorias'));
 
 app.use(require('./routes/auth'));
 
